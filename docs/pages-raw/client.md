@@ -21,7 +21,7 @@ client = schwabdev.Client(
     tokens_db="~/.schwabdev/tokens.db",
     encryption=None,
     timeout=10,
-    call_for_auth=None,
+    call_on_auth=None,
 )
 ```
 
@@ -31,7 +31,7 @@ client = schwabdev.Client(
 * `tokens_db (str)`: Path to tokens database (e.g. `"~/.schwabdev/tokens.db"`).
 * `encryption` `(str | None)`: Encryption key to encrypt the tokens database, if `None` then no encryption is used. To create a key use `from cryptography.fernet import Fernet` and run `key = Fernet.generate_key()`, save the key using the string representation `key.decode()`. See example in <a target="_blank" href="https://github.com/tylerebowers/Schwabdev/blob/main/docs/examples/extra/encrypted_db_setup.py">encrypted_db_setup.py</a>.
 * `timeout (int)`: Request timeout in seconds (how long to wait for a response).
-* `call_for_auth (function | None)`: Function to call for authentication, the function is called with one argument: the URL to visit for authentication, it is expected to return the full callback URL or code from the callback URL after the user has signed in, see an example in <a target="_blank" href="https://github.com/tylerebowers/Schwabdev/blob/main/docs/examples/extra/capture_callback.py">capture_callback.py</a>.
+* `call_on_auth (function | None)`: Function to call for authentication, the function is called with one argument: the URL to visit for authentication, it is expected to return the full callback URL or code from the callback URL after the user has signed in, see an example in <a target="_blank" href="https://github.com/tylerebowers/Schwabdev/blob/main/docs/examples/extra/capture_callback.py">capture_callback.py</a>.
 
 ---
 
@@ -45,7 +45,7 @@ client = schwabdev.ClientAsync(
     tokens_db="~/.schwabdev/tokens.db",
     encryption=None,
     timeout=10,
-    call_for_auth=None,
+    call_on_auth=None,
     parsed = False,
 )
 ```
