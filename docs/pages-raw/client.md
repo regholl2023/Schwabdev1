@@ -60,7 +60,7 @@ The parameters are the same as the synchronous client with the addition of:
 * Multiple clients can be run at the same time, though they must share the same `tokens_db` file to avoid token conflicts and only one streamer can be run at a time.
 * Clients are likely not thread-safe, but there are some inbuilt protections. If you want to use a client in multiple threads it is recommended to use a threading lock around the client calls.
 * In order to use all API calls you must have both API sections added to your app: **Accounts and Trading Production** and **Market Data Production**.
-* If you are storing your code in a GitHub repo then use <a target="_blank" href="https://pypi.org/project/python-dotenv/">dotenv</a> to store your keys, especially if you are using a git repo.
+* If you are storing your code in a GitHub repo then use <a target="_blank" href="https://pypi.org/project/python-dotenv/">dotenv</a> to store your keys.
 With a GitHub repo you can include `*.env` in the `.gitignore` file to stop your credentials from getting committed.
 * Schwabdev uses the `logging` module to log/print information, warnings and errors. You can change the level of logging by setting
   `logging.basicConfig(level=logging.XXXX)`
