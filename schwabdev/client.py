@@ -30,7 +30,7 @@ class ClientBase:
             tokens_db (str): Path to tokens file.
             timeout (int): Request timeout in seconds - how long to wait for a response.
             use_session (bool): Use a requests session for requests instead of creating a new session for each request.
-            call_on_notify (function | None): Function to call when user needs to be notified (e.g. for input)
+            call_on_auth (function | None): Function to call for authentication (see docs)
         """
 
         # other checks are done in the tokens class
