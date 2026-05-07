@@ -7,7 +7,6 @@ import base64
 import datetime
 import logging
 import os
-import webbrowser
 import sqlite3
 import requests
 import urllib.parse
@@ -17,7 +16,7 @@ from cryptography.fernet import Fernet
 _ENC_PREFIX = "enc:"
 
 class Tokens:
-    def __init__(self,app_key: str, app_secret: str, callback_url: str, logger: logging.Logger, tokens_db: str="~/.schwabdev/tokens.db", encryption: str=None, call_for_auth=None):
+    def __init__(self,app_key: str, app_secret: str, callback_url: str, logger: logging.Logger, tokens_db: str="~/.schwabdev/tokens.db", encryption: str=None, call_for_auth: callable=None, open_browser_for_auth: bool=True):
         """
         Initialize a tokens manager
 
@@ -63,6 +62,7 @@ class Tokens:
         self._refresh_token_issued = datetime.datetime.min.replace(tzinfo=datetime.timezone.utc) # datetime of refresh token issue
         self._access_token_timeout = 30 * 60                # in seconds (30 min from schwab)
         self._refresh_token_timeout = 7 * 24 * 60 * 60      # in seconds (7 days from schwab)
+        self._open_browser_for_auth = open_browser_for_auth  # open browser for auth
         self._logger = logger                               # logger
         self._call_for_auth = call_for_auth                 # function to call for custom auth
         self._cipher_suite = Fernet(encryption) if (encryption and len(encryption) > 16) else None # encryption suite for tokens
@@ -421,11 +421,13 @@ class Tokens:
                 auth_callback = self._call_for_auth(auth_url)
             else:
                 print(f"[Schwabdev] Open to authenticate: {auth_url}")
-                try:
-                    webbrowser.open(auth_url)
-                except Exception as e:
-                    self._logger.error(e)
-                    self._logger.warning("Could not open browser for authorization (open the link manually)")
+                if self._open_browser_for_auth:
+                    try:
+                        import webbrowser
+                        webbrowser.open(auth_url)
+                    except Exception as e:
+                        self._logger.error(e)
+                        self._logger.warning("Could not open browser for authorization (open the link manually)")
 
                 # parse the callback url
             
